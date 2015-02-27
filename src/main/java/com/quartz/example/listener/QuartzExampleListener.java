@@ -50,7 +50,7 @@ public class QuartzExampleListener extends QuartzInitializerListener{
             // empiezan los jobs
             scheduler.start();
 		} catch (Exception ex) {
-			
+			ex.printStackTrace();
 		}
 	}
 }
