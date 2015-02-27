@@ -30,11 +30,14 @@ public class QuartzExampleListener extends QuartzInitializerListener{
 		
 		try {
 			Scheduler scheduler = factory.getScheduler();
-            JobDetail job = JobBuilder.newJob(JobA.class).build();
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity("simple").withSchedule(
+            JobDetail jobA = JobBuilder.newJob(JobA.class).build();
+            Trigger triggerA = TriggerBuilder.newTrigger().withIdentity("simple").withSchedule(
                     CronScheduleBuilder.cronSchedule("0 0/1 * 1/1 * ? *")
             ).startNow().build();
-            scheduler.scheduleJob(job, trigger);
+            scheduler.scheduleJob(jobA, triggerA);
+            
+            
+            
             scheduler.start();
 		} catch (Exception ex) {
 			
