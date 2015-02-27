@@ -13,6 +13,7 @@ import org.quartz.ee.servlet.QuartzInitializerListener;
 import org.quartz.impl.StdSchedulerFactory;
 
 import com.quartz.example.job.JobA;
+import com.quartz.example.job.JobB;
 
 public class QuartzExampleListener extends QuartzInitializerListener{
 
@@ -30,14 +31,23 @@ public class QuartzExampleListener extends QuartzInitializerListener{
 		
 		try {
 			Scheduler scheduler = factory.getScheduler();
+			
+			// Calcular las expresiones en http://www.cronmaker.com/
+			
             JobDetail jobA = JobBuilder.newJob(JobA.class).build();
-            Trigger triggerA = TriggerBuilder.newTrigger().withIdentity("simple").withSchedule(
+            Trigger triggerA = TriggerBuilder.newTrigger().withIdentity("JobA").withSchedule(
                     CronScheduleBuilder.cronSchedule("0 0/1 * 1/1 * ? *")
             ).startNow().build();
             scheduler.scheduleJob(jobA, triggerA);
             
             
+            JobDetail jobB = JobBuilder.newJob(JobB.class).build();
+            Trigger triggerB = TriggerBuilder.newTrigger().withIdentity("JobB").withSchedule(
+                    CronScheduleBuilder.cronSchedule("0 0/1 * 1/1 * ? *")
+            ).startNow().build();
+            scheduler.scheduleJob(jobB, triggerB);
             
+            // empiezan los jobs
             scheduler.start();
 		} catch (Exception ex) {
 			
